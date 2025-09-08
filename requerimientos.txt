@@ -1,0 +1,6 @@
+flask
+paramiko
+psycopg2-binary
+bcrypt
+dotenv
+flask-login

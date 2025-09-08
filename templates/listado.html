@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Clientes</h2>
+<a href="{{ url_for('clientes.alta') }}" class="btn btn-primary mb-3">Nuevo Cliente</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Nombre</th>
+            <th>DNI</th>
+            <th>Email</th>
+            <th>Dirección</th>
+            <th>IP</th>
+            <th>Plan</th>
+            <th>Activo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for c in clientes %}
+        <tr>
+            <td>{{ c[1] }}</td>
+            <td>{{ c[2] }}</td>
+            <td>{{ c[3] }}</td>
+            <td>{{ c[5] }}</td>
+            <td>{{ c[4] }}</td>
+            <td>{{ c[6] }}</td>
+            <td>{{ c[8] }}</td>
+            <td>{{ "Sí" if c[7] else "No" }}</td>
+            <td>
+                <a href="{{ url_for('clientes.editar', cliente_id=c[0]) }}" class="btn btn-sm btn-warning">Editar</a>
+                <form action="{{ url_for('clientes.eliminar', cliente_id=c[0]) }}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

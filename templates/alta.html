@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Alta de Cliente</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" name="nombre" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Dirección</label>
+            <input type="text" class="form-control" name="direccion" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Entre calles</label>
+            <input type="text" class="form-control" name="entre_calles">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Teléfono</label>
+            <input type="text" class="form-control" name="telefono">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Teléfono 2</label>
+            <input type="text" class="form-control" name="telefono2">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Coordenadas</label>
+            <input type="text" class="form-control" name="coordenadas" placeholder="-34.12345,-58.12345">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Extra</label>
+            <textarea class="form-control" name="extra"></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">DNI</label>
+            <input type="number" class="form-control" name="dni" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">IP</label>
+            <input type="text" class="form-control" name="ip" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Plan</label>
+            <select class="form-select" name="plan_id">
+                <option value="">-- Seleccionar --</option>
+                {% for plan in planes %}
+                    <option value="{{ plan.id }}">{{ plan.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Tipo de Factura</label>
+            <select class="form-select" name="tipo_factura">
+                <option value="X" selected>Presupuesto (X)</option>
+                <option value="C">Factura C</option>
+            </select>
+        </div>
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" name="gratis" id="gratis">
+            <label class="form-check-label" for="gratis">Cliente Gratis</label>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Bonificación ($)</label>
+            <input type="number" class="form-control" name="bonificacion" value="0">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Bonificación en Meses</label>
+            <input type="number" class="form-control" name="bonificacion_meses" value="0">
+        </div>
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a href="{{ url_for('clientes.listado') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Planes</h2>
+    <a href="{{ url_for('planes.alta') }}" class="btn btn-primary mb-3">Nuevo Plan</a>
+    <a href="{{ url_for('planes.actualizar_queues') }}" class="btn btn-warning mb-3">Actualizar Queues</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Subida (Mbps)</th>
+                <th>Bajada (Mbps)</th>
+                <th>Clientes</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plan in planes %}
+            <tr>
+                <td>{{ plan.nombre }}</td>
+                <td>{{ plan.velocidad_subida }}</td>
+                <td>{{ plan.velocidad_bajada }}</td>
+                <td>{{ plan.cantidad_clientes }}</td>
+                <td>
+                    <a href="{{ url_for('planes.editar', id=plan.id) }}" class="btn btn-sm btn-info">Editar</a>
+                    <form action="{{ url_for('planes.borrar', id=plan.id) }}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-danger"
+                                onclick="return confirm('¿Eliminar este plan?')">Borrar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

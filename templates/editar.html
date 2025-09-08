@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Editar Cliente #{{ cliente.numero_cliente }}</h1>
+
+<style>
+  .form-grid {
+    display:grid; grid-template-columns: repeat(2, minmax(260px, 1fr)); gap:14px; max-width: 1000px;
+  }
+  .form-grid label { font-weight: 600; }
+  .row-span-2 { grid-column: span 2; }
+  .acciones { margin-top: 16px; }
+  .help { font-size: 12px; color: #666; }
+</style>
+
+<form method="POST">
+  <div class="form-grid">
+    <div>
+      <label>Nombre</label>
+      <input type="text" name="nombre" value="{{ cliente.nombre }}" required class="form-control">
+    </div>
+
+    <div>
+      <label>DNI</label>
+      <input type="number" name="dni" value="{{ cliente.dni }}" class="form-control" required>
+    </div>
+
+    <div class="row-span-2">
+      <label>Dirección</label>
+      <input type="text" name="direccion" value="{{ cliente.direccion }}" class="form-control" required>
+    </div>
+
+    <div>
+      <label>Entre calles</label>
+      <input type="text" name="entre_calles" value="{{ cliente.entre_calles or '' }}" class="form-control">
+    </div>
+
+    <div>
+      <label>Coordenadas (lat,lon)</label>
+      <input type="text" name="coordenadas" value="{{ cliente.coordenadas or '' }}" class="form-control" placeholder="-34.12,-58.34">
+      <div class="help">Útil para abrir en Maps.</div>
+    </div>
+
+    <div>
+      <label>Teléfono</label>
+      <input type="text" name="telefono" value="{{ cliente.telefono or '' }}" class="form-control">
+    </div>
+
+    <div>
+      <label>Teléfono 2</label>
+      <input type="text" name="telefono2" value="{{ cliente.telefono2 or '' }}" class="form-control">
+    </div>
+
+    <div>
+      <label>Email</label>
+      <input type="email" name="email" value="{{ cliente.email }}" class="form-control" required>
+    </div>
+
+    <div>
+      <label>IP</label>
+      <input type="text" name="ip" value="{{ cliente.ip }}" class="form-control" required>
+    </div>
+
+    <div>
+      <label>Plan</label>
+      <select name="plan_id" class="form-control">
+        <option value="">-- Sin plan --</option>
+        {% for p in planes %}
+          <option value="{{ p.id }}" {{ 'selected' if cliente.plan_id == p.id else '' }}>
+            {{ p.nombre }} (↑{{ p.velocidad_subida }} / ↓{{ p.velocidad_bajada }} Mbps)
+          </option>
+        {% endfor %}
+      </select>
+      <div class="help">Las colas en MikroTik se configuran en Kbps. Se convierte automáticamente desde Mbps.</div>
+    </div>
+
+    <div>
+      <label>Tipo de factura</label>
+      <select name="tipo_factura" class="form-control">
+        {% set tf = (cliente.tipo_factura or 'X') %}
+        <option value="X" {{ 'selected' if tf == 'X' else '' }}>X (Presupuesto)</option>
+        <option value="A" {{ 'selected' if tf == 'A' else '' }}>A</option>
+        <option value="B" {{ 'selected' if tf == 'B' else '' }}>B</option>
+        <option value="C" {{ 'selected' if tf == 'C' else '' }}>C</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Activo</label>
+      <select name="activo" class="form-control">
+        <option value="1" {{ 'selected' if cliente.activo == 1 else '' }}>Sí</option>
+        <option value="0" {{ 'selected' if cliente.activo == 0 else '' }}>No</option>
+      </select>
+      <div class="help">Si queda inactivo, se agrega a la lista de bloqueados en MikroTik.</div>
+    </div>
+
+    <div>
+      <label>Gratis</label><br>
+      <input type="checkbox" name="gratis" value="1" {{ 'checked' if cliente.gratis == 1 else '' }}>
+    </div>
+
+    <div>
+      <label>Bonificación ($)</label>
+      <input type="number" step="1" min="0" name="bonificacion" value="{{ cliente.bonificacion or 0 }}" class="form-control">
+    </div>
+
+    <div>
+      <label>Bonificación (meses)</label>
+      <input type="number" step="1" min="0" name="bonificacion_meses" value="{{ cliente.bonificacion_meses or 0 }}" class="form-control">
+    </div>
+
+    <div class="row-span-2">
+      <label>Extra</label>
+      <textarea name="extra" rows="3" class="form-control">{{ cliente.extra or '' }}</textarea>
+    </div>
+  </div>
+
+  <div class="acciones">
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    <a href="{{ url_for('clientes.listado') }}" class="btn btn-secondary">Volver</a>
+  </div>
+</form>
+{% endblock %}

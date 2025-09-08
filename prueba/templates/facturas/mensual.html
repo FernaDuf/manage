@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Facturación Mensual</h2>
+    <form method="POST">
+        <p>Esto generará facturas para <b>todos los clientes activos</b> según su plan.</p>
+        <button type="submit" class="btn btn-primary">Generar Facturación</button>
+        <a href="{{ url_for('facturas.listado') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Planes</h2>
+    <a href="{{ url_for('planes.nuevo') }}" class="btn btn-primary">➕ Nuevo Plan</a>
+  </div>
+
+  {% if planes %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Velocidad Bajada (Mbps)</th>
+        <th>Velocidad Subida (Mbps)</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for plan in planes %}
+      <tr>
+        <td>{{ plan.id }}</td>
+        <td>{{ plan.nombre }}</td>
+        <td>{{ plan.velocidad_bajada }}</td>
+        <td>{{ plan.velocidad_subida }}</td>
+        <td>${{ plan.precio }}</td>
+        <td>
+          <a href="{{ url_for('planes.editar', plan_id=plan.id) }}" class="btn btn-sm btn-warning">✏️ Editar</a>
+          <form method="post" action="{{ url_for('planes.eliminar', plan_id=plan.id) }}" style="display:inline;">
+            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar este plan?')">🗑️ Eliminar</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="alert alert-info">No hay planes cargados.</div>
+  {% endif %}
+</div>
+{% endblock %}

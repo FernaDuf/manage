@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Crear Factura Manual</h1>
+
+<form method="post">
+  <label>Cliente:</label>
+  <select name="cliente_id" required>
+    {% for c in clientes %}
+      <option value="{{ c[0] }}">{{ c[1] }} - {{ c[2] }}</option>
+    {% endfor %}
+  </select><br><br>
+
+  <label>Tipo de factura:</label>
+  <select name="tipo" required>
+    <option value="X">Presupuesto (X)</option>
+    <option value="A">Factura A</option>
+    <option value="B">Factura B</option>
+    <option value="C">Factura C</option>
+  </select><br><br>
+
+  <label>Monto:</label>
+  <input type="number" name="monto" step="0.01" required><br><br>
+
+  <label>Descripción:</label>
+  <textarea name="descripcion"></textarea><br><br>
+
+  <button type="submit">💾 Guardar</button>
+</form>
+{% endblock %}

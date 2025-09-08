@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Nuevo Cliente</h2>
+
+    <form method="POST">
+        <div class="row">
+            <!-- Nombre -->
+            <div class="col-md-6 mb-3">
+                <label>Nombre</label>
+                <input type="text" name="nombre" class="form-control" required>
+            </div>
+
+            <!-- Dirección -->
+            <div class="col-md-6 mb-3">
+                <label>Dirección</label>
+                <input type="text" name="direccion" class="form-control" required>
+            </div>
+
+            <!-- Entre calles -->
+            <div class="col-md-6 mb-3">
+                <label>Entre calles</label>
+                <input type="text" name="entre_calles" class="form-control">
+            </div>
+
+            <!-- DNI -->
+            <div class="col-md-6 mb-3">
+                <label>DNI</label>
+                <input type="number" name="dni" class="form-control" required>
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-6 mb-3">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+
+            <!-- Teléfono -->
+            <div class="col-md-6 mb-3">
+                <label>Teléfono</label>
+                <input type="text" name="telefono" class="form-control">
+            </div>
+
+            <!-- Teléfono alternativo -->
+            <div class="col-md-6 mb-3">
+                <label>Teléfono 2</label>
+                <input type="text" name="telefono2" class="form-control">
+            </div>
+
+            <!-- IP -->
+            <div class="col-md-6 mb-3">
+                <label>IP</label>
+                <input type="text" name="ip" class="form-control" required>
+            </div>
+
+            <!-- Plan -->
+            <div class="col-md-6 mb-3">
+                <label>Plan</label>
+                <select name="plan_id" class="form-control">
+                    <option value="">-- Seleccione --</option>
+                    {% for plan in planes %}
+                        <option value="{{ plan.id }}">{{ plan.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Tipo de Factura -->
+            <div class="col-md-6 mb-3">
+                <label>Tipo de Factura</label>
+                <select name="tipo_factura" class="form-control">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="X" selected>X</option>
+                </select>
+            </div>
+
+            <!-- Gratis -->
+            <div class="col-md-6 mb-3">
+                <label>Gratis</label>
+                <input type="number" name="gratis" class="form-control" value="0">
+            </div>
+
+            <!-- Bonificación -->
+            <div class="col-md-6 mb-3">
+                <label>Bonificación</label>
+                <input type="number" step="0.01" name="bonificacion" class="form-control" value="0">
+            </div>
+
+            <!-- Bonificación Meses -->
+            <div class="col-md-6 mb-3">
+                <label>Bonificación (Meses)</label>
+                <input type="number" name="bonificacion_meses" class="form-control" value="0">
+            </div>
+
+            <!-- Activo -->
+            <div class="col-md-6 mb-3 form-check">
+                <input type="checkbox" name="activo" class="form-check-input" id="activoCheck" checked>
+                <label for="activoCheck" class="form-check-label">Activo</label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{ url_for('clientes.listado') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

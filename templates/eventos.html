@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Eventos</h2>
+
+<form method="get" class="mb-3">
+    <input type="text" name="tipo" placeholder="Tipo" value="{{ request.args.get('tipo', '') }}">
+    <input type="text" name="numero_cliente" placeholder="Número Cliente" value="{{ request.args.get('numero_cliente', '') }}">
+    <input type="date" name="fecha_inicio" value="{{ request.args.get('fecha_inicio', '') }}">
+    <input type="date" name="fecha_fin" value="{{ request.args.get('fecha_fin', '') }}">
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+    <a href="{{ url_for('eventos.descargar_eventos', **request.args) }}" class="btn btn-secondary">Descargar CSV</a>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Descripción</th>
+            <th>Tipo</th>
+            <th>Número Cliente</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for e in eventos %}
+        <tr>
+            <td>{{ e[0] }}</td>
+            <td>{{ e[1] }}</td>
+            <td>{{ e[2] }}</td>
+            <td>{{ e[3] }}</td>
+            <td>{{ e[4] }}</td>
+            <td>{{ e[5] }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

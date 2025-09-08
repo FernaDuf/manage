@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Listado de Facturas</h1>
+
+<div style="margin-bottom:12px;">
+  <a href="{{ url_for('facturas.mensual') }}" class="btn">📅 Facturación mensual</a>
+  <a href="{{ url_for('facturas.manual') }}" class="btn">➕ Factura manual</a>
+  <a href="{{ url_for('facturas.pago') }}" class="btn">💵 Registrar pago</a>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<table id="tabla-facturas" class="display">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>N° Cliente</th>
+      <th>Cliente</th>
+      <th>Fecha</th>
+      <th>Tipo</th>
+      <th>Descripción</th>
+      <th>Monto</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for f in facturas %}
+    <tr>
+      <td>{{ f.id }}</td>
+      <td>{{ f.numero_cliente or '' }}</td>
+      <td>{{ f.cliente_nombre or '' }}</td>
+      <td>{{ f.fecha_emision.strftime('%Y-%m-%d') if f.fecha_emision }}</td>
+      <td>{{ f.tipo }}</td>
+      <td>{{ f.descripcion }}</td>
+      <td>${{ '%.2f' % (f.monto or 0) }}</td>
+      <td>{{ f.estado }}</td>
+      <td>
+        <a href="{{ url_for('facturas.descargar', id=f.id) }}">📄 PDF</a> |
+        <a href="{{ url_for('facturas.manual') }}?cliente_id={{ f.cliente_id }}">✏️ Editar/Manual</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+$(document).ready(function () {
+  $('#tabla-facturas').DataTable({
+    language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' },
+    order: [[3, 'desc']]
+  });
+});
+</script>
+{% endblock %}
